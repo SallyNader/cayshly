@@ -1,0 +1,17 @@
+
+
+
+
+
+after the cart button you should put free button
+
+
+
+
+
+
+@if(Auth::check())
+
+                                  <li><a style="background-color: #E6190E;color: white"  href="{{url('free')}}"><i class=""></i> <div  class="hdtxt" >{{ trans('site.free') }}</div></a></li>
+
+                                  @endif
