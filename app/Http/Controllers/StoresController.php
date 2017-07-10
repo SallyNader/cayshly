@@ -108,48 +108,40 @@ return redirect()->back();
      */
     public function store(Request $request)
     {
-        if($request->has('store_cat')){
-        
-	        $store = new Store;
-	        $store_user = $request->input('rr')/50;
-	        $store_name = $request->input('store_name');
-	        $store_phone = $request->input('store_phone');
-	        $store_email = $request->input('store_email');
-	        $store_website = $request->input('store_website');
-	        $store_desc = $request->input('store_desc');
-	
-	        if ($request->has('rr')) {$store->SUserId = $store_user;}
-	        if ($request->has('store_name')) {$store->SName = $store_name;}
-	        if ($request->has('store_phone')) {$store->SPhone = $store_phone;}
-	        if ($request->has('store_email')) {$store->SEmail = $store_email;}
-	        if ($request->has('store_website')) {$store->SWebsite = $store_website;}
-	        if ($request->has('store_desc')) {$store->PDescription = $store_desc;}
-	        $store->SCover = 'default.jpg';
-	        $store->SImg = 'default.jpg';
-	
-	        // Date Of Creation and the expiry date (14 days)
-	        $Date = date('Y-m-d');
-	        $store->SCreatedAt = $Date;
-	        $store->SExpireAt = date('Y-m-d', strtotime($Date. ' + 14 days'));
-	
-	        $store->save();
-	
-	        $storeId = DB::select("SELECT Sid FROM stores WHERE SUserId = $store_user AND SName = '$store_name' AND SPhone = '$store_phone' AND SEmail = '$store_email' AND SWebsite = '$store_website' AND PDescription = '$store_desc' ORDER BY Sid DESC LIMIT 1");
-	
-	        $sid = $storeId[0]->Sid;
-	        foreach ($request->input('store_cat') as $key => $value) {
-	            DB::table('store_cats')->insert([
-	                'SCStoreId'=>$sid,
-	                'SCCId'=>$value
-	                ]);
-	        }
-	        return redirect("stores/$sid");
-        
-        }else{
-        
-        	return redirect()->back();
-        
+        $store = new Store;
+        $store_user = $request->input('rr')/50;
+        $store_name = $request->input('store_name');
+        $store_phone = $request->input('store_phone');
+        $store_email = $request->input('store_email');
+        $store_website = $request->input('store_website');
+        $store_desc = $request->input('store_desc');
+
+        if ($request->has('rr')) {$store->SUserId = $store_user;}
+        if ($request->has('store_name')) {$store->SName = $store_name;}
+        if ($request->has('store_phone')) {$store->SPhone = $store_phone;}
+        if ($request->has('store_email')) {$store->SEmail = $store_email;}
+        if ($request->has('store_website')) {$store->SWebsite = $store_website;}
+        if ($request->has('store_desc')) {$store->PDescription = $store_desc;}
+        $store->SCover = 'default.jpg';
+        $store->SImg = 'default.jpg';
+
+        // Date Of Creation and the expiry date (14 days)
+        $Date = date('Y-m-d');
+        $store->SCreatedAt = $Date;
+        $store->SExpireAt = date('Y-m-d', strtotime($Date. ' + 14 days'));
+
+        $store->save();
+
+        $storeId = DB::select("SELECT Sid FROM stores WHERE SUserId = $store_user AND SName = '$store_name' AND SPhone = '$store_phone' AND SEmail = '$store_email' AND SWebsite = '$store_website' AND PDescription = '$store_desc' ORDER BY Sid DESC LIMIT 1");
+
+        $sid = $storeId[0]->Sid;
+        foreach ($request->input('store_cat') as $key => $value) {
+            DB::table('store_cats')->insert([
+                'SCStoreId'=>$sid,
+                'SCCId'=>$value
+                ]);
         }
+        return redirect("stores/$sid");
     }
 
     /**

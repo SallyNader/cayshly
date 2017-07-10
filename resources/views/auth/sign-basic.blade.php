@@ -29,7 +29,7 @@
                                 <p class="theError"><i class="fa fa-warning"></i> {{ $errors->first('email') }}</p>
                             @endif   
 
-                            {!! Form::open(['url'=>'auth/login','method'=>'post','class'=>'form']) !!}
+                            {!! Form::open(['url'=>'auth/login/custom','method'=>'post','class'=>'form']) !!}
                             <input type="email" class="" name="email" required placeholder='{{ trans('sign.login-mail') }}'>                            
                             <input type="password" class="" name="password" required placeholder='{{ trans('sign.login-pass') }}'>
                             <input type="submit" class="btn btn-red" name="login" value='{{ trans('sign.login') }}'>

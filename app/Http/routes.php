@@ -43,7 +43,7 @@ Route::post('/invite', 'NetworkController@invitefriend');
 /*----------------------------------------------------------------------------------------------------/
 /--- Sign Page
 /----------------------------------------------------------------------------------------------------*/
-
+Route::post("auth/login/custom","AuthCayshly@login");
 // SIGN UP Process 
 // 1 - Basic informations
 Route::get('/', 'AuthCayshly@signBasic');
@@ -91,6 +91,31 @@ Route::post('/reporting/send','ReportingController@sendReport');
  Route::get('remove-saved-post/{id}','PostController@removeSavedPost');
 
 //end of new updates
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -161,11 +186,6 @@ Route::get('delete/image/{id}','ProductController@deleteImage');
 
 // The Main Middleware for auth users and the pages that they can access    
 Route::group(['middleware'=>'auth'], function(){
-    // Buy By AAIB
-    Route::get('/buy/aaib', 'CartController@buyAAIB');
-    Route::post('/buy/aaib/do', 'CartController@buyAAIBDo');
-    Route::get('/buy/aaib/confirmation', 'CartController@buyAAIBConfirmation');
-    
     // Change PASSWORD
     Route::get('/change-password', 'UserProfileController@getChPsPage');
     Route::post('/change-password', 'UserProfileController@postChPsPage');

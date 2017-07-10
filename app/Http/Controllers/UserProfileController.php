@@ -9,6 +9,7 @@ use App\User;
 use Auth;
 use DB;
 use Mail;
+use App\Point;
 
 class UserProfileController extends Controller
 {
@@ -21,6 +22,7 @@ class UserProfileController extends Controller
      */
     public function show($id)
     {
+        $percent =0;
         $user = User::findOrFail($id);
 
         // Country, City, Area
@@ -49,6 +51,55 @@ class UserProfileController extends Controller
 
         // posts likes
         $likes = DB::select("SELECT * FROM likes JOIN users ON LUserId = id");
+
+$array=[
+$user->country,
+$user->city,
+$user->area,
+$user->name,
+$user->lastName,
+$user->email,
+$user->phone,
+ $user->about,
+ $user->gender,
+ $user->dateOfBirth,
+ $user->nationality,
+ $user->school,
+ $user->university,
+ $user->jobTitle,
+ $user->company,
+ $user->education,
+ $user->facebook,
+$user->linkedIn,
+$user->instagram,
+$user->address,
+];
+
+foreach($array as $value){
+
+
+if($value != null)
+
+    {$percent+=4.5;
+    }
+
+}
+
+if($AllHobbies != null){
+$percent+=4.5;
+
+}
+if($AllInterests != null){
+$percent+=4.5;
+    
+}
+
+// return $percent;
+
+if($percent == 99){
+
+    $percent=100;
+}
 
         return view('profiles.show',[
                     'id'=> $user->id,
@@ -81,7 +132,8 @@ class UserProfileController extends Controller
 
                     'posts'=>$posts,
                     'comments'=>$comments,
-                    'likes'=>$likes
+                    'likes'=>$likes,
+                    "percent"=>floor($percent)
         ]); 
 
     }
@@ -108,6 +160,146 @@ class UserProfileController extends Controller
 
         $uinterestes      = DB::table('userinterestes')->where('uIntUserId','=',$userAuth)->get();
         $uhobbies      = DB::table('userhobbies')->where('uHobUserId','=',$userAuth)->get();
+
+
+        if($user->name != null and $user->lastName !=null and $user->gender != null and $user->address != null and $user->dateOfBirth != null and $user->nationality != null ){
+
+
+    Point::firstOrCreate([
+
+"PoUserId"=>Auth::user()->id,
+"PoProductId"=>0,
+"PoProductName"=>"initials",
+"PoAmount"=>150,
+"PoItemNums"=>0,
+"PoFrom"=>"complete basic information in profile",
+"PoStatus"=>"increased",
+"PoConfirm"=>1
+
+
+
+    ]);
+
+
+        }
+
+        if($user->about != null){
+
+            Point::firstOrCreate([
+
+"PoUserId"=>Auth::user()->id,
+"PoProductId"=>0,
+"PoProductName"=>"initials",
+"PoAmount"=>150,
+"PoItemNums"=>0,
+"PoFrom"=>"complete about information in profile",
+"PoStatus"=>"increased",
+"PoConfirm"=>1
+
+
+
+    ]);
+
+        }
+
+
+
+
+        if( $user->school  !=null  and $user->university  !=null and $user->jobTitle !=null and $user->company !=null and  $user->education !=null ){
+
+Point::firstOrCreate([
+
+"PoUserId"=>Auth::user()->id,
+"PoProductId"=>0,
+"PoProductName"=>"initials",
+"PoAmount"=>150,
+"PoItemNums"=>0,
+"PoFrom"=>"complete education information in profile",
+"PoStatus"=>"increased",
+"PoConfirm"=>1
+
+
+
+    ]);
+
+        }
+
+        if($user->facebook !=null  and $user->instagram !=null and  $user->linkedIn  !=null and  $user->phone  !=null){
+
+
+            Point::firstOrCreate([
+
+"PoUserId"=>Auth::user()->id,
+"PoProductId"=>0,
+"PoProductName"=>"initials",
+"PoAmount"=>150,
+"PoItemNums"=>0,
+"PoFrom"=>"complete contacts information in profile",
+"PoStatus"=>"increased",
+"PoConfirm"=>1
+
+
+
+    ]);
+        }
+
+        if($uhobbies != null){
+
+             Point::firstOrCreate([
+
+"PoUserId"=>Auth::user()->id,
+"PoProductId"=>0,
+"PoProductName"=>"initials",
+"PoAmount"=>125,
+"PoItemNums"=>0,
+"PoFrom"=>"complete hobbies in profile",
+"PoStatus"=>"increased",
+"PoConfirm"=>1
+
+
+
+    ]);
+        }
+
+
+
+
+           if($interestes != null){
+
+             Point::firstOrCreate([
+
+"PoUserId"=>Auth::user()->id,
+"PoProductId"=>0,
+"PoProductName"=>"initials",
+"PoAmount"=>125,
+"PoItemNums"=>0,
+"PoFrom"=>"complete interestes in profile",
+"PoStatus"=>"increased",
+"PoConfirm"=>1
+
+
+
+    ]);
+        }
+
+
+           if($user->country != null  and    $user->city != null  and  $user->area!= null){
+
+             Point::firstOrCreate([
+
+"PoUserId"=>Auth::user()->id,
+"PoProductId"=>0,
+"PoProductName"=>"initials",
+"PoAmount"=>150,
+"PoItemNums"=>0,
+"PoFrom"=>"complete location information in profile",
+"PoStatus"=>"increased",
+"PoConfirm"=>1
+
+
+
+    ]);
+        }
 
         if ($userAuth == $user->id) {
             return view('profiles.edit',[

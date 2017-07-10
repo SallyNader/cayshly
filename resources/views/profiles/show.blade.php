@@ -180,7 +180,14 @@
 					<div class="profile-p-l-user-posts">
 						@if(Auth::check())
 							@if(Auth::user()->id == $id)
+							<div class="progress box" style="border-top:2px solid #4CAF50;">
+<div style="color: #333;font-size: 14px;padding:5px 0px;text-align: center;">نسبة التقدم فى بناء الصفحة الشخصية</div>
+                <div style="color: #000;background-color: #f1f1f1;border-radius: 10px;overflow: hidden;">
+                                <div style="color: #fff;background-color: #2196F3;padding:2px 5px;text-align: center;width:{{$percent}}%;">{{$percent}}%</div>
+</div>
+</div>
 							<!-- Create new post -->
+
 							@include('_parts.create_post')
 							@endif
 						@endif

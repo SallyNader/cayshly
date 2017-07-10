@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserHobbiesTable extends Migration
+class CreateLoginsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,11 @@ class CreateUserHobbiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('userhobbies', function(Blueprint $table){
-            $table->increments('uHobId');   // User Hobby Id
-            $table->integer('uHobHobId');   // Hobbies Id
-            $table->integer('uHobUserId');  // User Id
+        Schema::create('logins', function (Blueprint $table) {
+            $table->increments('l_id');
+            $table->integer("user_id")->unsighned();
+            $table->date("login_date");
+            $table->integer("noOfLogin");
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateUserHobbiesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('userHobbies');
+        Schema::drop('logins');
     }
 }

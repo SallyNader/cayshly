@@ -19,7 +19,7 @@
 					</div>
 					
 					<div class="box">
-						{!! Form::open(['url'=>'stores/store', 'method' => 'post','class'=>'form cstore']) !!}
+						{!! Form::open(['url'=>'stores/store', 'method' => 'post','class'=>'form']) !!}
 		                    <label for="store-name">
 		                    	<span class="span">{{ trans('site.StoreName') }} <span class="required-g">({{ trans('site.Required') }})</span> : </span>
 		                    	<input type="text" required name="store_name" id="store-name" />
@@ -35,15 +35,14 @@
 		                    	<input type="email" required name="store_email" id="store-email" />
 		                    </label>
 
-				    <label>{{ trans('site.CategoriesChooseRelatedCategory') }} <span class="required-g">({{ trans('site.Required') }})</span></label>
-		                    <p class="showval" style="color: red;display: none;">** يجب اختيار تصنيف واحد على الاقل</p>
+							<label>{{ trans('site.CategoriesChooseRelatedCategory') }} <span class="required-g">({{ trans('site.Required') }})</span></label>
 		                    <div class="allCat">
 			                    @foreach($categories as $category)
-			                    	<label class="checkbox-g notcheckedit" for="store-cat">
-				                    	<span><i class="fa fa-check"></i> <?= (session()->get('lang') != 'en') ? $category->cat_name_ar : $category->cat_name_en ;?>  </span>
-				                    	<input class="store_cats" type="checkbox" name="store_cat[]" value="{{ $category->id }}" />
-				                    </label>
-				                @endforeach
+				                    	<label class="checkbox-g notcheckedit" for="store-cat">
+					                    	<span><i class="fa fa-check"></i> <?= (session()->get('lang') != 'en') ? $category->cat_name_ar : $category->cat_name_en ;?>  </span>
+					                    	<input type="checkbox" name="store_cat[]" value="{{ $category->id }}" />
+					                    </label>
+					                @endforeach
 		                    </div>
 
 							<label for="store-website">

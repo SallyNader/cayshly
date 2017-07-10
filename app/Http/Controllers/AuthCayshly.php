@@ -5,13 +5,16 @@ namespace App\Http\Controllers;
 use DB;
 use Mail;
 use Auth;
-use App\User;
+
 use Validator;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Point;
-
+use App\Login;
+use App\User;
+use Carbon\Carbon;
+use Hash;
 class AuthCayshly extends Controller
 {
     /**
@@ -20,7 +23,11 @@ class AuthCayshly extends Controller
     public function signBasic()
     {
         if(auth()->check())
-            return redirect('/home');
+            {
+
+
+                return redirect('/home');
+            }
         else            
             return view('auth.sign-basic'); 
     }
@@ -28,9 +35,82 @@ class AuthCayshly extends Controller
     /**
      * Sign in global
      */
+
+    public function login(Request $request){
+
+
+
+     $email=$request->get("email");
+     $password=$request->get("password");
+
+
+
+ if (Auth::attempt(['email' => $email, 'password' => $password])) {
+
+
+$login=Login::where("login_date",Carbon::now()->toDateString())->first();
+if($login === null)
+
+{
+
+    Login::create([
+
+"user_id"=>Auth::user()->id,
+"login_date"=>Carbon::now()->toDateString(),
+"noOfLogin"=>1
+
+   ]);
+    return redirect('/home');
+}
+else
+{
+
+    $login=Login::where("login_date",Carbon::now()->toDateString())->first();
+   $login->noOfLogin=$login->noOfLogin+1;
+    $login->save();
+
+
+    if( $login->noOfLogin==2){
+
+
+        Point::create([
+
+
+          "PoUserId"=>Auth::user()->id,
+          "PoProductId"=>0,
+          "PoProductName"=>"initials",
+          "PoAmount"=>10,
+          "PoItemNums"=>0,
+          "PoFrom"=>"login",
+          "PoStatus"=>"increased",
+          "PoConfirm"=>1
+
+
+
+            ]);
+    }
+
+       return redirect('/home');
+
+   }
+ }
+
+    // $user=User::where("email",$email)->where("password",Hash::check("password",$password))->first();
+    // if($user !== null)
+    //     echo "done";
+    // else{
+
+    //     echo "error";
+    // }
+
+
+
+
+    }
     public function signGlobal(){
         if(auth()->check())
-            return redirect('/home');
+
+       return redirect('/home');
         else            
             return view('auth.sign-global'); 
     }
@@ -162,6 +242,7 @@ $user=User::find(Auth::user()->id);
             // Save new user
             $user->save();
 
+            
 	    // Notification
             $reUserId = DB::table('users')->where('email','=',$request->input('email'))->orderBy('id', 'desc')->first();
 
@@ -236,6 +317,22 @@ $user=User::find(Auth::user()->id);
             $newPoint->PoConfirm = 1;
             $newPoint->save();
 
+
+
+            if($request->input('parentEmail') != null){
+    Point::create([
+"PoUserId"=>$this->parentEquation($request->input('parentEmail')),
+          "PoProductId"=>0,
+          "PoProductName"=>"initials",
+          "PoAmount"=>200,
+          "PoItemNums"=>0,
+          "PoFrom"=>"invite friend",
+          "PoStatus"=>"increased",
+          "PoConfirm"=>1
+        ]);
+
+}
+
             // Send Email
             $tousername     = $getUser->name;
             $touseremail    = $getUser->email;
@@ -249,7 +346,7 @@ $user=User::find(Auth::user()->id);
 
             mail($touseremail, $subject, $message, $headers);
 
-            // Rerurn the optional 
+          
             return view('auth.sign-optional',[
                 'countries'=>$countries,
                 'cities'=>$cities,
@@ -258,6 +355,8 @@ $user=User::find(Auth::user()->id);
                 'interestes'=>$interestes,
                 'email'=>$request->input('email')
             ]);
+
+            return $this->parentEquation($request->input('parentEmail'));
 
         }
     }

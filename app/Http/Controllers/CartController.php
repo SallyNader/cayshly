@@ -88,7 +88,7 @@ class CartController extends Controller
     $index = 0;
     if (!empty(session()->get('carts'))) {
       foreach (session()->get('carts') as $key => $value) {
-        $res = DB::select("SELECT * FROM products JOIN stores ON ProStoreId = Sid WHERE ProId = $value");
+      	$res = DB::select("SELECT * FROM products JOIN stores ON ProStoreId = Sid WHERE ProId = $value");
       	if(!empty($res)){
       		$products[$index]['product'] = $res[0];
 	        $products[$index]['quant'] = $request->input('quant')[$index];
@@ -99,11 +99,7 @@ class CartController extends Controller
 
     $totalAmount = 0;
     foreach ($products as $key => $value) {
-      if($products[$key]['product']->ProPriceType == "USD"){
-        $totalAmount += (float) $products[$key]['quant'] * (float) $products[$key]['product']->ProPrice * 18.4;
-      }else{
-        $totalAmount += (float) $products[$key]['quant'] * (float) $products[$key]['product']->ProPrice ;
-      }
+      $totalAmount += (int) $products[$key]['quant'] * (int) $products[$key]['product']->ProPrice ;
     }
     return view('actions.buy', ['products'=>$products, 'totalpoints'=> $this->getTotalPoints(), 'totalpointsnotconfirmed'=> $this->getTotalPointsNotConfirmed(), 'totalAmount'=>$totalAmount]);
   }
@@ -355,15 +351,11 @@ class CartController extends Controller
 
     $totalAmount = 0;
     foreach ($products as $key => $value) {
-      if($products[$key]['product']->ProPriceType == "USD"){
-        $totalAmount += (float) $products[$key]['quant'] * (float) $products[$key]['product']->ProPrice * 18.4;
-      }else{
-        $totalAmount += (float) $products[$key]['quant'] * (float) $products[$key]['product']->ProPrice ;
-      }
+      $totalAmount += (int) $products[$key]['quant'] * (int) $products[$key]['product']->ProPrice ;
     }
 
     $vpc_MerchTxnRef  = $order_number + Auth::user()->id;      // The site ref
-    $vpc_OrderInfo    = Auth::user()->email;                   // The order info or order number
+    $vpc_OrderInfo    = $order_number;                         // The order info or order number
     $vpc_Amount       = $totalAmount;                          // The order amount
 
     // Send Rando String To the user
@@ -432,8 +424,7 @@ class CartController extends Controller
     $POST["vpc_Currency"]             = $r->get('vpc_Currency');
 
     // Get the order from buys table
-    $BNumber = $POST["vpc_MerchTxnRef"] - Auth::user()->id;
-    $order = DB::table('buys')->where('BNumber', $BNumber)->get();
+    $order = DB::table('buys')->where('BNumber', $POST["vpc_OrderInfo"])->get();
     //dd($order);
 
     //return view('emails.order-confirmation-details', ['name'=>Auth::user()->name, 'orders'=>$order]);
@@ -547,8 +538,7 @@ class CartController extends Controller
     // Ending
     Session::forget('carts');
 
-    // return view('actions.buyConfirmed');
-    return view('actions.buyConfirmed', ['BNumber'=>$BNumber]);
+    return view('actions.buyConfirmed');
     //return view('aaib.PHP_VPC_3Party_Order_DR');
   }
 

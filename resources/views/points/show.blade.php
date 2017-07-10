@@ -18,7 +18,12 @@
 						<div class="points-my-item">
 							
 							<p class="points-my-item-l">
-								{{ trans('site.Yourpoints') }} <span>{{ $point->PoStatus }}</span> {{ trans('site.with') }} <span style="font-weight:bold;">{{ $point->PoAmount }}</span>
+								{{ trans('site.Yourpoints') }} <span>{{ $point->PoStatus }}</span> {{ trans('site.with') }} <span style="font-weight:bold;">{{ $point->PoAmount }}</span> @if($point->PoFrom != null)
+
+								from <span>{{$point->PoFrom}}</span>
+								@endif
+
+
 								
 								@if($point->PoItemNums > 0)
 									
@@ -28,7 +33,7 @@
 										 {{ trans('site.pointsfrom') }} <span>{{ $point->PoFrom }}</span> <span>{{ $point->PoItemNums }}</span> {{ trans('site.itemsof') }} 
 										<a href="{{ url('product/' . $point->PoProductId) }}" class="link"><span style="font-weight:bold;">{{ $point->PoProductName }}</span></a>.
 									@endif
-
+                                
 								@else 
 								
 								{{ trans('site.yournetwork') }}
@@ -43,6 +48,7 @@
 						</div>
 
 					@endforeach
+
 					@else
 					<p class="nothing">{{ trans('site.Nothingtodisplaystart') }}</p>
 					@endif
