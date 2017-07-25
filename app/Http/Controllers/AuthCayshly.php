@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use Mail;
 use Auth;
-
+use Illuminate\Support\Facades\Redirect;
 use Validator;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -48,7 +48,7 @@ class AuthCayshly extends Controller
  if (Auth::attempt(['email' => $email, 'password' => $password])) {
 
 
-$login=Login::where("login_date",Carbon::now()->toDateString())->first();
+$login=Login::where("login_date",Carbon::now()->toDateString())->where("user_id",Auth::user()->id)->first();
 if($login === null)
 
 {
@@ -65,7 +65,7 @@ if($login === null)
 else
 {
 
-    $login=Login::where("login_date",Carbon::now()->toDateString())->first();
+    $login=Login::where("login_date",Carbon::now()->toDateString())->where("user_id",Auth::user()->id)->first();
    $login->noOfLogin=$login->noOfLogin+1;
     $login->save();
 
@@ -78,7 +78,7 @@ else
 
           "PoUserId"=>Auth::user()->id,
           "PoProductId"=>0,
-          "PoProductName"=>"initials",
+          "PoProductName"=>"login",
           "PoAmount"=>10,
           "PoItemNums"=>0,
           "PoFrom"=>"login",
@@ -93,6 +93,11 @@ else
        return redirect('/home');
 
    }
+ }else{
+
+
+
+    return Redirect::back()->withErrors(['Check Your Credentials']);
  }
 
     // $user=User::where("email",$email)->where("password",Hash::check("password",$password))->first();
@@ -323,7 +328,7 @@ $user=User::find(Auth::user()->id);
     Point::create([
 "PoUserId"=>$this->parentEquation($request->input('parentEmail')),
           "PoProductId"=>0,
-          "PoProductName"=>"initials",
+          "PoProductName"=>"invite",
           "PoAmount"=>200,
           "PoItemNums"=>0,
           "PoFrom"=>"invite friend",

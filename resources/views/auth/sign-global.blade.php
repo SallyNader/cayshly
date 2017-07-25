@@ -10,9 +10,13 @@
         <div style="position: relative;margin: auto;margin-top: 10%;width: 500px;">
             {{-- Sign in from here --}}
             <div class="box sign-in">
-                {!! (isset($msg))? $msg : '' !!}
+
+            @if($errors->any())
+                                {{$errors->first()}}
+                            @endif   
+                <!-- {!! (isset($msg))? $msg : '' !!} -->
                 <h1>{{ trans('sign.login') }}</h1>
-                {!! Form::open(['url'=>'auth/login','method'=>'post','class'=>'form']) !!}
+                {!! Form::open(['url'=>'auth/login/custom','method'=>'post','class'=>'form']) !!}
                 <input type="email" class="" name="email" required placeholder='{{ trans('sign.login-mail') }}'>                            
                 <input type="password" class="" name="password" required placeholder='{{ trans('sign.login-pass') }}'>
                 <input type="submit" class="btn btn-red" name="login" value='{{ trans('sign.login') }}'>                                

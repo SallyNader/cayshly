@@ -146,7 +146,7 @@ if($percent == 99){
      */
     public function edit($id)
     {
-
+$percent =0;
         $userAuth = Auth::user()->id;
         $user = User::findOrFail($id);
 
@@ -169,7 +169,7 @@ if($percent == 99){
 
 "PoUserId"=>Auth::user()->id,
 "PoProductId"=>0,
-"PoProductName"=>"initials",
+"PoProductName"=>"complete profile",
 "PoAmount"=>150,
 "PoItemNums"=>0,
 "PoFrom"=>"complete basic information in profile",
@@ -189,7 +189,7 @@ if($percent == 99){
 
 "PoUserId"=>Auth::user()->id,
 "PoProductId"=>0,
-"PoProductName"=>"initials",
+"PoProductName"=>"complete profile",
 "PoAmount"=>150,
 "PoItemNums"=>0,
 "PoFrom"=>"complete about information in profile",
@@ -211,7 +211,7 @@ Point::firstOrCreate([
 
 "PoUserId"=>Auth::user()->id,
 "PoProductId"=>0,
-"PoProductName"=>"initials",
+"PoProductName"=>"complete profile",
 "PoAmount"=>150,
 "PoItemNums"=>0,
 "PoFrom"=>"complete education information in profile",
@@ -231,7 +231,7 @@ Point::firstOrCreate([
 
 "PoUserId"=>Auth::user()->id,
 "PoProductId"=>0,
-"PoProductName"=>"initials",
+"PoProductName"=>"complete profile",
 "PoAmount"=>150,
 "PoItemNums"=>0,
 "PoFrom"=>"complete contacts information in profile",
@@ -249,7 +249,7 @@ Point::firstOrCreate([
 
 "PoUserId"=>Auth::user()->id,
 "PoProductId"=>0,
-"PoProductName"=>"initials",
+"PoProductName"=>"complete profile",
 "PoAmount"=>125,
 "PoItemNums"=>0,
 "PoFrom"=>"complete hobbies in profile",
@@ -264,13 +264,13 @@ Point::firstOrCreate([
 
 
 
-           if($interestes != null){
+           if($uinterestes != null){
 
              Point::firstOrCreate([
 
 "PoUserId"=>Auth::user()->id,
 "PoProductId"=>0,
-"PoProductName"=>"initials",
+"PoProductName"=>"complete profile",
 "PoAmount"=>125,
 "PoItemNums"=>0,
 "PoFrom"=>"complete interestes in profile",
@@ -282,6 +282,55 @@ Point::firstOrCreate([
     ]);
         }
 
+        $array=[
+$user->country,
+$user->city,
+$user->area,
+$user->name,
+$user->lastName,
+$user->email,
+$user->phone,
+ $user->about,
+ $user->gender,
+ $user->dateOfBirth,
+ $user->nationality,
+ $user->school,
+ $user->university,
+ $user->jobTitle,
+ $user->company,
+ $user->education,
+ $user->facebook,
+$user->linkedIn,
+$user->instagram,
+$user->address,
+];
+
+foreach($array as $value){
+
+
+if($value != null)
+
+    {$percent+=4.5;
+    }
+
+}
+
+if($uhobbies != null){
+$percent+=4.5;
+
+}
+if($uinterestes != null){
+$percent+=4.5;
+    
+}
+
+// return $percent;
+
+if($percent == 99){
+
+    $percent=100;
+}
+
 
            if($user->country != null  and    $user->city != null  and  $user->area!= null){
 
@@ -289,7 +338,7 @@ Point::firstOrCreate([
 
 "PoUserId"=>Auth::user()->id,
 "PoProductId"=>0,
-"PoProductName"=>"initials",
+"PoProductName"=>"complete profile",
 "PoAmount"=>150,
 "PoItemNums"=>0,
 "PoFrom"=>"complete location information in profile",
@@ -333,7 +382,8 @@ Point::firstOrCreate([
                     'linkedIn'=> $user->linkedIn,
                     'instagram'=> $user->instagram,
                     'cover'=> $user->uCover,
-                    'img'=> $user->uImg
+                    'img'=> $user->uImg,
+                    "percent"=>floor($percent)
             ]); 
         }else{
             return view('errors.404');

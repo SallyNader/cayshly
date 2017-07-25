@@ -24,7 +24,9 @@ return [
 	'Searchfor'=>'بحث عن ..',
 	'all'=>'الكل',
 	
-	
+	//motivation
+
+	'progress'=>'نسبة التقدم فى بناء الصفحة الشخصية',
 	
 	//start of new updates
 	

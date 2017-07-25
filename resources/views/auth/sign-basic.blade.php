@@ -25,8 +25,13 @@
                         {{-- Sign in from here --}}
                         <div class="box sign-in">
                             <h1>{{ trans('sign.login') }}</h1>
-                            @if($errors->has('email'))
+                          <!--   @if($errors->has('email'))
                                 <p class="theError"><i class="fa fa-warning"></i> {{ $errors->first('email') }}</p>
+                            @endif -->
+
+
+                            @if($errors->any())
+                                <p class="theError"><i class="fa fa-warning"></i> {{$errors->first()}}</p>
                             @endif   
 
                             {!! Form::open(['url'=>'auth/login/custom','method'=>'post','class'=>'form']) !!}

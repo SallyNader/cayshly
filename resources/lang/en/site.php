@@ -28,6 +28,9 @@ return [
 	'Commentedonyour'=>'Commented on your',
 	'yourpost'=>'post',
 	'yourproduct'=>'product',
+	//motivation
+
+	'progress'=>'Progress rate in building the profile',
 	
 	//start of new updates
 	
