@@ -67,10 +67,16 @@
                       </div>
                     </div>
                   </li>
+
                   @endif
                 @endforeach
               </ul>
-            </div>  
+
+            </div> 
+   <a href="{{url('free/seeAll/0')}}"><div style="text-align:center;font-size: 16px;padding: 10px 0px;color:#FFFFFF;text-align:right;">
+              <p style="padding:5px 30px;display:inline-block;background-color:#555555;border-radius: 20px 0px 0px 20px;">{{trans('site.seeAll')}}</p>
+          </div></a>
+
           </div>
         @endif
 
@@ -103,6 +109,9 @@
                 @endforeach 
               </ul>
             </div>  
+             <a href="{{url('free/seeAll/20')}}"><div style="text-align:center;font-size: 16px;padding: 10px 0px;color:#FFFFFF;text-align:right;">
+              <p style="padding:5px 30px;display:inline-block;background-color:#555555;border-radius: 20px 0px 0px 20px;">{{trans('site.seeAll')}}</p>
+          </div></a>
           </div>
         @endif
         
@@ -134,7 +143,10 @@
                 </li>
                 @endforeach 
               </ul>
-            </div>  
+            </div>
+             <a href="{{url('free/seeAll/50')}}"><div style="text-align:center;font-size: 16px;padding: 10px 0px;color:#FFFFFF;text-align:right;">
+              <p style="padding:5px 30px;display:inline-block;background-color:#555555;border-radius: 20px 0px 0px 20px;">{{trans('site.seeAll')}}</p>
+          </div></a>  
           </div>
         @endif
 
@@ -167,7 +179,10 @@
               </li>
               @endforeach 
             </ul>
-          </div>  
+          </div>
+           <a href="{{url('free/seeAll/100')}}"><div style="text-align:center;font-size: 16px;padding: 10px 0px;color:#FFFFFF;text-align:right;">
+              <p style="padding:5px 30px;display:inline-block;background-color:#555555;border-radius: 20px 0px 0px 20px;">{{trans('site.seeAll')}}</p>
+          </div></a>  
         </div>
         @endif
     </div>

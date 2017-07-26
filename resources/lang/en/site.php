@@ -23,7 +23,7 @@ return [
 	'Logout'=>'Logout',
 	'Searchfor'=>'Search for ..',
 	'all'=>'All',
-
+    "seeAll"=>"see all",
 	'likedyour'=>'liked your',
 	'Commentedonyour'=>'Commented on your',
 	'yourpost'=>'post',

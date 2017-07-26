@@ -15,6 +15,56 @@ class FreeSectionController extends Controller
     /**
      * Get total points
      */
+
+
+    public function seeAll($flag){
+
+
+
+$myPoints=Point::where('PoUserId',Auth::user()->id)->first();
+    $myPoints=$myPoints->PoAmount;
+    $LE=$myPoints/100;
+    $user=Auth::user()->id;
+    $LEround=floor($myPoints/100);
+    $products=Product::all();
+
+    if($flag == 0){
+
+
+$products = $proExact=DB::table('products')->
+    join('stores','stores.Sid','=','products.ProStoreId')->
+    select('products.*')->
+    where('products.ProPrice',"<=",$LEround)->where('stores.SIsPlan','=',1)->
+    orderBy('products.ProPrice')->get();
+
+    }
+     if($flag == 20){
+
+
+$products= DB::table('products')->join('stores','stores.Sid','=','products.ProStoreId')->
+
+    select('products.*')->
+    where('ProPrice',$LEround+20)->where('stores.SIsPlan','=',1)->get();
+     }
+      if($flag == 50){
+
+        $products=DB::table('products')->join('stores','stores.Sid','=','products.ProStoreId')->
+
+    select('products.*')->
+    where('ProPrice',$LEround+50)->where('stores.SIsPlan','=',1)->get();
+
+      }
+        if($flag ==100){
+          $products =DB::table('products')->join('stores','stores.Sid','=','products.ProStoreId')->
+
+    select('products.*')->
+    where('ProPrice',$LEround+100)->where('stores.SIsPlan','=',1)->get();
+
+        }
+
+
+        return view("free.seeAll",compact("products","flag"));
+    }
     public function getTotalPoints(){
         if (Auth::check()) {
             $userId = Auth::user()->id;

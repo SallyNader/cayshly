@@ -222,7 +222,7 @@
 
 <input type="hidden" name="_method" value="DELETE">
 
-<button  data-id="{{$product->ProId}}" id="btnDeleteProduct"  class="deleteProduct" style="background-color:#E6190E;border:none;color:white">{{trans('site.deleteJ')}}
+<button  data-id="{{$product->ProId}}" id="btnDeleteProduct{{$product->ProId}}"  class="deleteProduct" style="background-color:#E6190E;border:none;color:white">{{trans('site.deleteJ')}}
 														</button>
 													</form>
 
@@ -427,14 +427,14 @@
 												<a class="update" href="{{ url('product/' . $product->ProId . '/edit') }}"><i class="fa fa-fw fa-refresh"></i></a>
 												
 
-												<form action="{{url('testDelete/'.$product->ProId)}}" id="formDeleteProduct"  method="post" style="padding-right:123px;padding-top:45px;" >
+												<form action="{{url('product/'.$product->ProId.'/delete')}}"  method="post" style="padding-right:123px;padding-top:45px;" >
 
 															{{ csrf_field() }}
 
 
 <input type="hidden" name="_method" value="DELETE">
 
-<button  data-id="{{$product->ProId}}" id="btnDeleteProduct"  class="deleteProduct" style="background-color:#E6190E;border:none;color:white">{{trans('site.deleteJ')}}
+<button   style="background-color:#E6190E;border:none;color:white">{{trans('site.deleteJ')}}
 														</button>
 													</form>
 											</td>
@@ -444,7 +444,7 @@
 										$('.deleteProduct').on('click', function(e) {
 										    var inputData = $('#formDeleteProduct').serialize();
 
-										    var dataId = $('#btnDeleteProduct').attr('data-id');
+										    var dataId = $(this).attr('data-id');
 										    var parent = $(this).parent();
 
 										    $.ajax({
