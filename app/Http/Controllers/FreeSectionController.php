@@ -21,17 +21,26 @@ class FreeSectionController extends Controller
 
 
 
-$myPoints=Point::where('PoUserId',Auth::user()->id)->first();
-    $myPoints=$myPoints->PoAmount;
-    $LE=$myPoints/100;
+
+ 
+
+     $userId = Auth::user()->id;
+        $redeemedPoints = DB::select("select SUM(PoAmount) as red from points where PoUserId = $userId AND PoFrom = 'redeeming' AND PoConfirm = 1");
+        $purchasedPoints = DB::select("select SUM(PoAmount) as pur from points where PoUserId = $userId AND PoFrom = 'purchasing' AND PoConfirm = 1");
+        $totalPoints = $purchasedPoints[0]->pur - $redeemedPoints[0]->red;
+
+
+
+         $LE= $totalPoints/100;
     $user=Auth::user()->id;
-    $LEround=floor($myPoints/100);
+    $LEround=floor( $totalPoints/100);
     $products=Product::all();
+
 
     if($flag == 0){
 
 
-$products = $proExact=DB::table('products')->
+$products = DB::table('products')->
     join('stores','stores.Sid','=','products.ProStoreId')->
     select('products.*')->
     where('products.ProPrice',"<=",$LEround)->where('stores.SIsPlan','=',1)->
@@ -43,22 +52,24 @@ $products = $proExact=DB::table('products')->
 
 $products= DB::table('products')->join('stores','stores.Sid','=','products.ProStoreId')->
 
-    select('products.*')->
-    where('ProPrice',$LEround+20)->where('stores.SIsPlan','=',1)->get();
+    select('products.*')->where('ProPrice',">=",$LEround+1)->
+    where('ProPrice',"<=",$LEround+20)->where('stores.SIsPlan','=',1)->get();
+
      }
       if($flag == 50){
 
         $products=DB::table('products')->join('stores','stores.Sid','=','products.ProStoreId')->
 
-    select('products.*')->
-    where('ProPrice',$LEround+50)->where('stores.SIsPlan','=',1)->get();
-
+    select('products.*')->where('ProPrice',">",$LEround+20)->
+    where('ProPrice',"<=",$LEround+50)->where('stores.SIsPlan','=',1)->get();
+    
       }
         if($flag ==100){
-          $products =DB::table('products')->join('stores','stores.Sid','=','products.ProStoreId')->
+          $products  =DB::table('products')->join('stores','stores.Sid','=','products.ProStoreId')->
 
-    select('products.*')->
-    where('ProPrice',$LEround+100)->where('stores.SIsPlan','=',1)->get();
+    select('products.*')->where('ProPrice',">",$LEround+50)->
+    where('ProPrice',"<=",$LEround+100)->where('stores.SIsPlan','=',1)->get();
+
 
         }
 
@@ -88,6 +99,22 @@ $products= DB::table('products')->join('stores','stores.Sid','=','products.ProSt
     if (Auth::check()) {
 
 
+
+
+
+     $userId = Auth::user()->id;
+        $redeemedPoints = DB::select("select SUM(PoAmount) as red from points where PoUserId = $userId AND PoFrom = 'redeeming' AND PoConfirm = 1");
+        $purchasedPoints = DB::select("select SUM(PoAmount) as pur from points where PoUserId = $userId AND PoFrom = 'purchasing' AND PoConfirm = 1");
+        $totalPoints = $purchasedPoints[0]->pur - $redeemedPoints[0]->red;
+
+
+
+
+
+
+
+
+
     $exact[]="";
     $plusOne[]="";
     $plusFive[]="";
@@ -98,11 +125,12 @@ $products= DB::table('products')->join('stores','stores.Sid','=','products.ProSt
     $plusTwoHundred[]="";
     $plusRournd[]="";
 
-    $myPoints=Point::where('PoUserId',Auth::user()->id)->first();
-    $myPoints=$myPoints->PoAmount;
-    $LE=$myPoints/100;
+    // $myPoints=Point::where('PoUserId',Auth::user()->id)->first();
+    // $myPoints=$myPoints->PoAmount;
+
+    $LE= $totalPoints/100;
     $user=Auth::user()->id;
-    $LEround=floor($myPoints/100);
+    $LEround=floor( $totalPoints/100);
     $products=Product::all();
 
     $proRound=Product::where('ProPrice',">",$LEround+1)->where('ProPrice',"<=",$LEround+200)->orderBy('ProPrice')->get();
@@ -148,18 +176,22 @@ $products= DB::table('products')->join('stores','stores.Sid','=','products.ProSt
 
     $protwinty=DB::table('products')->join('stores','stores.Sid','=','products.ProStoreId')->
 
-    select('products.*')->
-    where('ProPrice',$LEround+20)->where('stores.SIsPlan','=',1)->get();
+    select('products.*')->where('ProPrice',">=",$LEround+1)->
+    where('ProPrice',"<=",$LEround+20)->where('stores.SIsPlan','=',1)->get();
+
+
+
+
 
     $proFifty=DB::table('products')->join('stores','stores.Sid','=','products.ProStoreId')->
 
-    select('products.*')->
-    where('ProPrice',$LEround+50)->where('stores.SIsPlan','=',1)->get();
+    select('products.*')->where('ProPrice',">",$LEround+20)->
+    where('ProPrice',"<=",$LEround+50)->where('stores.SIsPlan','=',1)->get();
 
     $proHundred=DB::table('products')->join('stores','stores.Sid','=','products.ProStoreId')->
 
-    select('products.*')->
-    where('ProPrice',$LEround+100)->where('stores.SIsPlan','=',1)->get();
+    select('products.*')->where('ProPrice',">",$LEround+50)->
+    where('ProPrice',"<=",$LEround+100)->where('stores.SIsPlan','=',1)->get();
 
     $proTwoHundred=DB::table('products')->join('stores','stores.Sid','=','products.ProStoreId')->
 

@@ -172,7 +172,7 @@ $percent =0;
 "PoProductName"=>"complete profile",
 "PoAmount"=>150,
 "PoItemNums"=>0,
-"PoFrom"=>"complete basic information in profile",
+"PoFrom"=>"purchasing",
 "PoStatus"=>"increased",
 "PoConfirm"=>1
 

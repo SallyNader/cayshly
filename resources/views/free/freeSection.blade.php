@@ -39,6 +39,8 @@
         <h1 class="txt-g-h" style="text-align:center;">{{ trans('site.freeText') }}</h1>
       </div>
 
+
+{{$LEround}}
       <div class="w-res">
 
         @if(count($proExact)>0)

@@ -81,7 +81,7 @@ else
           "PoProductName"=>"login",
           "PoAmount"=>10,
           "PoItemNums"=>0,
-          "PoFrom"=>"login",
+          "PoFrom"=>"purchasing",
           "PoStatus"=>"increased",
           "PoConfirm"=>1
 
@@ -328,10 +328,10 @@ $user=User::find(Auth::user()->id);
     Point::create([
 "PoUserId"=>$this->parentEquation($request->input('parentEmail')),
           "PoProductId"=>0,
-          "PoProductName"=>"invite",
+          "PoProductName"=>"invite friend",
           "PoAmount"=>200,
           "PoItemNums"=>0,
-          "PoFrom"=>"invite friend",
+          "PoFrom"=>"purchasing",
           "PoStatus"=>"increased",
           "PoConfirm"=>1
         ]);

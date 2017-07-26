@@ -383,10 +383,10 @@ return [
 	'fiveFree'=> 'Add Only Five Pound',
 	'tenFree'=> 'Add Only Ten Pound' ,
 
-	'twintyFree'=> 'Add Only Twenty Pound',
-	'fiftyFree'=> 'Add Only Fifty Pound' ,
+	'twintyFree'=> 'Add Only Up To Twenty Pound',
+	'fiftyFree'=> 'Add Only Up To Fifty Pound' ,
 
-	'hundredFree'=> 'Add One Hundred Pound' ,
+	'hundredFree'=> 'Add Only Up To One Hundred Pound' ,
 
 	'twoHundredFree'=> 'Add Two Hundred Pound',
 	'roundFree'=>'Products In Range',

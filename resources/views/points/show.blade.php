@@ -34,7 +34,7 @@
 										<a href="{{ url('product/' . $point->PoProductId) }}" class="link"><span style="font-weight:bold;">{{ $point->PoProductName }}</span></a>.
 									@endif
                                 
-								@elseif($point->PoProductName !="invite"  and $point->PoProductName !="login" and $point->PoProductName !="complete profile") 
+								@elseif($point->PoProductName !="invite friend"  and $point->PoProductName !="login" and $point->PoProductName !="complete profile") 
 								
 								{{ trans('site.yournetwork') }}
 								
