@@ -192,7 +192,7 @@ $percent =0;
 "PoProductName"=>"complete profile",
 "PoAmount"=>150,
 "PoItemNums"=>0,
-"PoFrom"=>"complete about information in profile",
+"PoFrom"=>"purchasing",
 "PoStatus"=>"increased",
 "PoConfirm"=>1
 
@@ -214,7 +214,7 @@ Point::firstOrCreate([
 "PoProductName"=>"complete profile",
 "PoAmount"=>150,
 "PoItemNums"=>0,
-"PoFrom"=>"complete education information in profile",
+"PoFrom"=>"purchasing",
 "PoStatus"=>"increased",
 "PoConfirm"=>1
 
@@ -234,7 +234,7 @@ Point::firstOrCreate([
 "PoProductName"=>"complete profile",
 "PoAmount"=>150,
 "PoItemNums"=>0,
-"PoFrom"=>"complete contacts information in profile",
+"PoFrom"=>"purchasing",
 "PoStatus"=>"increased",
 "PoConfirm"=>1
 
@@ -252,7 +252,7 @@ Point::firstOrCreate([
 "PoProductName"=>"complete profile",
 "PoAmount"=>125,
 "PoItemNums"=>0,
-"PoFrom"=>"complete hobbies in profile",
+"PoFrom"=>"purchasing",
 "PoStatus"=>"increased",
 "PoConfirm"=>1
 
@@ -273,7 +273,7 @@ Point::firstOrCreate([
 "PoProductName"=>"complete profile",
 "PoAmount"=>125,
 "PoItemNums"=>0,
-"PoFrom"=>"complete interestes in profile",
+"PoFrom"=>"purchasing",
 "PoStatus"=>"increased",
 "PoConfirm"=>1
 
@@ -341,7 +341,7 @@ if($percent == 99){
 "PoProductName"=>"complete profile",
 "PoAmount"=>150,
 "PoItemNums"=>0,
-"PoFrom"=>"complete location information in profile",
+"PoFrom"=>"purchasing",
 "PoStatus"=>"increased",
 "PoConfirm"=>1
 

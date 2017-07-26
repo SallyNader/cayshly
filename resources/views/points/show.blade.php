@@ -19,8 +19,11 @@
 							
 							<p class="points-my-item-l">
 								{{ trans('site.Yourpoints') }} <span>{{ $point->PoStatus }}</span> {{ trans('site.with') }} <span style="font-weight:bold;">{{ $point->PoAmount }}</span> @if($point->PoFrom != null)
-
+@if($point->PoProductName =="invite friend"  or $point->PoProductName =="login" or $point->PoProductName =="complete profile")
+from <span>{{$point->PoProductName}}</span>
+@else
 								from <span>{{$point->PoFrom}}</span>
+								@endif
 								@endif
 
 
@@ -29,8 +32,20 @@
 									
 									@if($point->PoProductName == "initials")
 										 From cayshly.
+
+
 									@else
-										 {{ trans('site.pointsfrom') }} <span>{{ $point->PoFrom }}</span> <span>{{ $point->PoItemNums }}</span> {{ trans('site.itemsof') }} 
+										 {{ trans('site.pointsfrom') }} 
+										 
+										
+										 <span>
+										 {{ $point->PoFrom }}
+										 </span> 
+										
+
+
+
+										 <span>{{ $point->PoItemNums }}</span> {{ trans('site.itemsof') }} 
 										<a href="{{ url('product/' . $point->PoProductId) }}" class="link"><span style="font-weight:bold;">{{ $point->PoProductName }}</span></a>.
 									@endif
                                 
